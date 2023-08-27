@@ -6,6 +6,7 @@ import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,19 +39,15 @@ class SpringMDCTests {
 
 
     @Test
-    void testGetMDCExample() throws IOException {
+    void testGetMDCExample() {
         String traceId = "sample-trace-id";
 
         webTestClient.get()
-                .uri("http://localhost:" + port + "/prova")
+                .uri("http://localhost:" + port + "/test-client")
                 .header("X-Amzn-Trace-Id", traceId)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(MessageResponse.class)
-                .consumeWith(result -> {
-                    MessageResponse response = result.getResponseBody();
-                    // Verifica qui i contenuti della risposta se necessario
-                });
+                .expectBody(MessageResponse.class);
 
         List<Map> jsonArray = retrieveJsonArrayFromFile();
 
@@ -80,6 +77,7 @@ class SpringMDCTests {
 
     }
 
+    @BeforeEach
     @AfterEach
     public void clean() throws IOException {
         FileUtils.write(new File(FILE_SOURCE_LOG), "", StandardCharsets.UTF_8);

@@ -15,7 +15,7 @@ import java.time.Duration;
 @Slf4j
 public class MockApi {
 
-    @GetMapping("prova")
+    @GetMapping("test-client")
     public Mono<ResponseEntity<MessageResponse>> getMDCExample(@RequestHeader("X-Amzn-Trace-Id") String awsTraceId) {
         log.info("[{}] Called getMDCExample with header:", awsTraceId);
         return Mono.just("test-product")
