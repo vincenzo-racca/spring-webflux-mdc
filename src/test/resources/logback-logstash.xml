@@ -10,6 +10,7 @@
     </appender>
 
     <logger name="com.vincenzoracca.webflux.mdc.api"  level="info" additivity="false" >
+        <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </logger>
 
