@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Vincenzo Racca
  *
  * If you want to use this library, you need to import this configuration class into your Spring application like this:
- * @Import(SpringMDC.class)
+ * "@Import(SpringMDC.class)"
  *
  */
 @Configuration

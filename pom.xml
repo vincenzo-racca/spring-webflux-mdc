@@ -12,6 +12,27 @@
     <groupId>com.vincenzoracca</groupId>
     <artifactId>spring-webflux-mdc</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <name>spring-webflux-mdc</name>
+    <description>Utility for adding MDC logs to a Spring Webflux application</description>
+    <url>https://github.com/vincenzo-racca/spring-webflux-mdc</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Vincenzo Racca</name>
+            <email>vincenzo.racca22@gmail.com</email>
+            <url>https://github.com/vincenzo-racca</url>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/vincenzo-racca/spring-webflux-mdc.git</connection>
+        <url>http://github.com/vincenzo-racca/spring-webflux-mdc.git/tree/main</url>
+    </scm>
+
 
     <properties>
         <java.version>17</java.version>
@@ -63,6 +84,19 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
