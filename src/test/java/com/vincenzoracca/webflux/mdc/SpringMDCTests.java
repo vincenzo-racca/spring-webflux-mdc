@@ -51,10 +51,7 @@ class SpringMDCTests {
 
         List<Map> jsonArray = retrieveJsonArrayFromFile();
 
-        jsonArray.forEach(json -> {
-            assertThat(json).containsKey("trace_id");
-            assertThat(json.get("trace_id")).isEqualTo("sample-trace-id");
-        });
+        jsonArray.forEach(json -> assertThat(json).containsEntry("trace_id", "sample-trace-id"));
     }
 
     private List<Map> retrieveJsonArrayFromFile() {

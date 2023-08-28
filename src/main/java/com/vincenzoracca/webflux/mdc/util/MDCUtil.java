@@ -12,7 +12,7 @@ public class MDCUtil {
 
     public static void registerMDC(String mdcKey) {
         Supplier<String> getMDC = () -> MDC.get(mdcKey);
-        Consumer<String> putMDC = (value) -> MDC.put(mdcKey, value);
+        Consumer<String> putMDC = value -> MDC.put(mdcKey, value);
         Runnable removeMDC = () -> MDC.remove(mdcKey);
 
         ContextRegistry.getInstance()
