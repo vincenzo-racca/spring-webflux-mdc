@@ -6,6 +6,7 @@ on:
       - develop
   pull_request:
     types: [opened, synchronize, reopened]
+    branches: [develop, feature/**]
 jobs:
   build:
     name: Build and analyze
@@ -36,3 +37,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=vincenzoracca_spring-webflux-mdc
+      - name: Deploy to Maven Central
+        if: github.head_ref == 'main'
+        run: mvn clean deploy
