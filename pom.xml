@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.vincenzoracca</groupId>
     <artifactId>spring-webflux-mdc</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>spring-webflux-mdc</name>
     <description>Utility for adding MDC logs to a Spring Webflux application</description>
     <url>https://github.com/vincenzo-racca/spring-webflux-mdc</url>
