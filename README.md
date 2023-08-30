@@ -2,16 +2,44 @@
 
 This library is a utility for adding MDC logs to a Spring Webflux application (with Spring Boot version 3).
 
+### Import the library
+
+With Maven:
+```xml
+<dependency>
+   <groupId>com.vincenzoracca</groupId>
+   <artifactId>spring-webflux-mdc</artifactId>
+   <version>1.0.2</version>
+</dependency>
+```
+or with Gradle:
+```json
+dependencies {
+	implementation 'com.vincenzoracca:spring-webflux-mdc:1.0.2'
+}
+```
+
 ### Usage
 In your Spring WebFlux Application: 
-1. import the [SpringMDC](./src/main/java/com/vincenzoracca/webflux/mdc/SpringMDC.java) class in a @Configuration class
-   or in the main class (@SpringBootApplication, in this way: \
-   `@Import(SpringMDC.class)`
-2. add in your application.properties the headers keys and the relatives mdc keys in this way: \
-  `spring.mdc.headers.<header_key>=<mdc_key>`
+1. import the [SpringMDC](./src/main/java/com/vincenzoracca/webflux/mdc/SpringMDC.java) class in a `@Configuration` class
+   or in the main class (`@SpringBootApplication`), in this way:
+   ```java
+   @Configuration
+   @Import(SpringMDC.class)
+   public class AppConfig {
+   }
+   ```
+2. add in your application.properties the headers keys and the relatives mdc keys in this way:
+   ```
+   spring.mdc.headers.<header_key_1>=<mdc_key_1> 
+   spring.mdc.headers.<header_key_2>=<mdc_key_2>
+   ```
 3. Optionally, if the HTTP request headers don't contain the <header_key>, the library can add the related MDC with a 
-   UUID value. If you want me to do this, in your application.properties add this: \
-   `spring.mdc.defaults=<header_key>`.
+   UUID value. If you want me to do this, in your application.properties add this:
+   ```
+   spring.mdc.defaults=<header_key_1>,<header_key_2>
+   ```
+   The <b>spring.mdc.defaults</b> property accepts a list of string (the header keys), with the comma as the delimiter.
 
 See the example in [application.properties](./src/test/resources/application.properties)
 
