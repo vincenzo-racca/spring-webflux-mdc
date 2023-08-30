@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ class SpringMDCTests {
 
 
     @Test
-    void testGetMDCExample() {
+    void testGetMDCExampleTest() {
         String traceId = "sample-trace-id";
 
         webTestClient.get()
@@ -52,6 +53,36 @@ class SpringMDCTests {
         List<Map> jsonArray = retrieveJsonArrayFromFile();
 
         jsonArray.forEach(json -> assertThat(json).containsEntry("trace_id", "sample-trace-id"));
+    }
+
+    @Test
+    void testGetMDCProgrammaticallyExampleOneTest() {
+        webTestClient.get()
+                .uri("http://localhost:" + port + "/test-client-programmatically")
+                .header("an-header-not-registered", "a-value")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(MessageResponse.class);
+
+        List<Map> jsonArray = new ArrayList<>(retrieveJsonArrayFromFile());
+        jsonArray.remove(0);
+
+        jsonArray.forEach(json -> assertThat(json).containsEntry("my-mdc-key", "a-value"));
+    }
+
+    @Test
+    void testGetMDCProgrammaticallyExampleTwoTest() {
+        webTestClient.get()
+                .uri("http://localhost:" + port + "/test-client-programmatically-2")
+                .header("an-header-not-registered", "a-value")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(MessageResponse.class);
+
+        List<Map> jsonArray = new ArrayList<>(retrieveJsonArrayFromFile());
+        jsonArray.remove(0);
+
+        jsonArray.forEach(json -> assertThat(json).containsEntry("my-mdc-key", "a-value"));
     }
 
     private List<Map> retrieveJsonArrayFromFile() {
