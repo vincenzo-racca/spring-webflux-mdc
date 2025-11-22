@@ -1,7 +1,6 @@
 package com.vincenzoracca.webflux.mdc.config;
 
 import com.vincenzoracca.webflux.mdc.filter.MdcFilter;
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.Map;
  * @author Vincenzo Racca
  */
 @ConfigurationProperties(prefix = "spring.mdc")
-@Data
 public class SpringMDCProperties {
 
 
@@ -34,4 +32,21 @@ public class SpringMDCProperties {
      * Example usage: spring.mdc.defaults=X-Amzn-Trace-Id -> if the request headers doesn't contain the X-Amzn-Trace-Id
      * key, then the library add the trace_id key to MDC with a UUID value.
      */
-    private List<String> defaults = new ArrayList<>();}
+    private List<String> defaults = new ArrayList<>();
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public List<String> getDefaults() {
+        return defaults;
+    }
+
+    public void setDefaults(List<String> defaults) {
+        this.defaults = defaults;
+    }
+}

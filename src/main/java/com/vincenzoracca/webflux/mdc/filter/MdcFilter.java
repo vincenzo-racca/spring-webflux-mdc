@@ -1,7 +1,6 @@
 package com.vincenzoracca.webflux.mdc.filter;
 
 import com.vincenzoracca.webflux.mdc.config.SpringMDCProperties;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -43,11 +42,14 @@ import java.util.UUID;
  *
  * @author Vincenzo Racca
  */
-@RequiredArgsConstructor
 public class MdcFilter implements WebFilter {
 
 
     private final SpringMDCProperties mdcProperties;
+
+    public MdcFilter(SpringMDCProperties mdcProperties) {
+        this.mdcProperties = mdcProperties;
+    }
 
 
     @Override

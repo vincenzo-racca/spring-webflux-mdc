@@ -2,7 +2,8 @@ package com.vincenzoracca.webflux.mdc.api;
 
 import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
 import com.vincenzoracca.webflux.mdc.util.MdcUtil;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -14,8 +15,9 @@ import java.time.Duration;
 import java.util.Map;
 
 @RestController
-@Slf4j
 public class MockApi {
+
+    private static final Logger log = LoggerFactory.getLogger(MockApi.class);
 
     @GetMapping("test-client")
     public Mono<ResponseEntity<MessageResponse>> getMDCExample(@RequestHeader("X-Amzn-Trace-Id") String awsTraceId) {
