@@ -1,7 +1,7 @@
 package com.vincenzoracca.webflux.mdc.api;
 
 import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
-import com.vincenzoracca.webflux.mdc.util.MDCUtil;
+import com.vincenzoracca.webflux.mdc.util.MdcUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,7 @@ public class MockApi {
                                         notifyShop(product, anHeader))
                                 .then(Mono.just(ResponseEntity.ok(new MessageResponse("Hello World!")))));
 
-        return MDCUtil.wrapMDC(responseEntityMono, Map.of("my-mdc-key", anHeader));
+        return MdcUtil.wrapMDC(responseEntityMono, Map.of("my-mdc-key", anHeader));
     }
 
     @GetMapping("test-client-programmatically-2")
@@ -54,7 +54,7 @@ public class MockApi {
                                         notifyShop(product, anHeader))
                                 .then(Mono.just(ResponseEntity.ok(new MessageResponse("Hello World!")))));
 
-        return MDCUtil.wrapMDC(responseEntityMono, "my-mdc-key", anHeader);
+        return MdcUtil.wrapMDC(responseEntityMono, "my-mdc-key", anHeader);
     }
 
     Mono<Void> addProduct(String productName, String awsTraceId) {

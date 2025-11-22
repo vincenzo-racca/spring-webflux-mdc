@@ -1,6 +1,6 @@
 package com.vincenzoracca.webflux.mdc.config;
 
-import com.vincenzoracca.webflux.mdc.util.MDCUtil;
+import com.vincenzoracca.webflux.mdc.util.MdcUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Hooks;
  * it handles all the keys of the headers variable in @{@link SpringMDCProperties}
  */
 @RequiredArgsConstructor
-public class MDCRegistry {
+public class MdcRegistry {
 
     private final SpringMDCProperties mdcProperties;
 
@@ -21,7 +21,7 @@ public class MDCRegistry {
     public void register() {
         Hooks.enableAutomaticContextPropagation();
 
-        mdcProperties.getHeaders().forEach((headerKey, headerValue) -> MDCUtil.registerMDC(headerValue));
+        mdcProperties.getHeaders().forEach((headerKey, headerValue) -> MdcUtil.registerMDC(headerValue));
 
     }
 }

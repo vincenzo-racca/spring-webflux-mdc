@@ -1,5 +1,6 @@
 package com.vincenzoracca.webflux.mdc.config;
 
+import com.vincenzoracca.webflux.mdc.filter.MdcFilter;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -18,7 +19,7 @@ public class SpringMDCProperties {
 
     /**
      * headers is a map: <HEADER_KEY, MDC_KEY>.
-     * This variable is used by the {@link com.vincenzoracca.webflux.mdc.filter.MDCFilter}.
+     * This variable is used by the {@link MdcFilter}.
      * If the headers in the HTTP request contains the HEADER_KEY, then the MDC_KEY is added in the MDC.
      * <p>
      * Example usage: spring.mdc.headers.X-Amzn-Trace-Id=trace_id -> if the request headers contains the X-Amzn-Trace-Id,

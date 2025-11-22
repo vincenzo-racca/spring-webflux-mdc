@@ -9,25 +9,22 @@ With Maven:
 <dependency>
    <groupId>com.vincenzoracca</groupId>
    <artifactId>spring-webflux-mdc</artifactId>
-   <version>1.0.2</version>
+   <version>1.1.0</version>
 </dependency>
 ```
 or with Gradle:
 ```json
 dependencies {
-	implementation 'com.vincenzoracca:spring-webflux-mdc:1.0.2'
+	implementation 'com.vincenzoracca:spring-webflux-mdc:1.1.0'
 }
 ```
 
 ### Usage
 In your Spring WebFlux Application: 
-1. import the [SpringMDC](./src/main/java/com/vincenzoracca/webflux/mdc/SpringMDC.java) class in a `@Configuration` class
-   or in the main class (`@SpringBootApplication`), in this way:
-   ```java
-   @Configuration
-   @Import(SpringMDC.class)
-   public class AppConfig {
-   }
+1. Ensure that your project includes the WebFlux MDC library as a dependency.
+   No manual import or @Configuration is needed: the library provides an auto-configuration class 
+   (SpringMdcAutoConfiguration) that is automatically applied only if at least one property under spring.mdc.headers is 
+   defined, thanks to the HeadersPresentCondition.
    ```
 2. add in your application.properties the headers keys and the relatives mdc keys in this way:
    ```
@@ -45,7 +42,7 @@ See the example in [application.properties](./src/test/resources/application.pro
 
 ### Usage with programmatically MDC (without headers)
 If you need to add a MDC key programmatically, in the most "external" method that contains the MDC key:
-1. wrap the method using the wrapMDC method of [MDCUtil](./src/main/java/com/vincenzoracca/webflux/mdc/util/MDCUtil.java)
+1. wrap the method using the wrapMDC method of [MdcUtil](./src/main/java/com/vincenzoracca/webflux/mdc/util/MdcUtil.java)
 Example: \
 Original method:
 ```java

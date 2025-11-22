@@ -25,7 +25,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class SpringMDCTests {
+class SpringMdcTests {
 
     private static final String FILE_SOURCE_LOG = "src/test/resources/tests.log";
 
@@ -107,7 +107,7 @@ class SpringMDCTests {
 
     @BeforeEach
     @AfterEach
-    public void clean() throws IOException {
+    void clean() throws IOException {
         FileUtils.write(new File(FILE_SOURCE_LOG), "", StandardCharsets.UTF_8);
     }
 }
