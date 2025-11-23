@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({SpringMDC.class, TestcontainersConfig.class})
-public class SpringMDCApplication {
+@Import({TestcontainersConfig.class})
+public class SpringMdcApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringMDCApplication.class);
+        SpringApplication.run(SpringMdcApplication.class);
     }
 
     @Bean
