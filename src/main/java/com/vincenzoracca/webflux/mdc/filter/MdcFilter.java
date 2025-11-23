@@ -1,9 +1,7 @@
 package com.vincenzoracca.webflux.mdc.filter;
 
 import com.vincenzoracca.webflux.mdc.config.SpringMDCProperties;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -16,16 +14,42 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * @author Vincenzo Racca
+ * Reactive {@link WebFilter} that enriches Reactor's {@link Context} with MDC key–value
+ * pairs derived from incoming HTTP request headers.
  *
- * This WebFilter checks the request headers and add the MDC keys.
+ * <p>This filter inspects the request headers and, based on the configuration provided
+ * through {@link SpringMDCProperties}, extracts values to be propagated within the
+ * Reactor execution context. These values can then be accessed by logging frameworks
+ * supporting MDC (Mapped Diagnostic Context), enabling consistent, request-scoped
+ * logging throughout the reactive pipeline.</p>
+ *
+ * <p>For each entry defined under {@code spring.mdc.headers}, the filter attempts
+ * to read the corresponding HTTP header from the incoming request:</p>
+ *
+ * <ul>
+ *     <li>If the header is present, the mapped MDC key is populated with its value.</li>
+ *     <li>If the header is missing but is listed under {@link SpringMDCProperties#getDefaults()},
+ *         a new random UUID is generated and assigned as its value.</li>
+ * </ul>
+ *
+ * <p>If at least one MDC value is resolved, the filter inserts the resulting map into
+ * the Reactor {@link Context} using {@code contextWrite}, ensuring propagation across the
+ * entire reactive chain.</p>
+ *
+ * <p>This filter is typically registered automatically via the library's
+ * auto-configuration and ordered with highest precedence to ensure MDC values are
+ * established before any user-defined filters execute.</p>
+ *
+ * @author Vincenzo Racca
  */
-@Component
-@RequiredArgsConstructor
-public class MDCFilter implements WebFilter {
+public class MdcFilter implements WebFilter {
 
 
     private final SpringMDCProperties mdcProperties;
+
+    public MdcFilter(SpringMDCProperties mdcProperties) {
+        this.mdcProperties = mdcProperties;
+    }
 
 
     @Override

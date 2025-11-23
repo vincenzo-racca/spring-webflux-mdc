@@ -1,8 +1,9 @@
 package com.vincenzoracca.webflux.mdc.api;
 
 import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
-import com.vincenzoracca.webflux.mdc.util.MDCUtil;
-import lombok.extern.slf4j.Slf4j;
+import com.vincenzoracca.webflux.mdc.util.MdcUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -14,8 +15,9 @@ import java.time.Duration;
 import java.util.Map;
 
 @RestController
-@Slf4j
 public class MockApi {
+
+    private static final Logger log = LoggerFactory.getLogger(MockApi.class);
 
     @GetMapping("test-client")
     public Mono<ResponseEntity<MessageResponse>> getMDCExample(@RequestHeader("X-Amzn-Trace-Id") String awsTraceId) {
@@ -40,7 +42,7 @@ public class MockApi {
                                         notifyShop(product, anHeader))
                                 .then(Mono.just(ResponseEntity.ok(new MessageResponse("Hello World!")))));
 
-        return MDCUtil.wrapMDC(responseEntityMono, Map.of("my-mdc-key", anHeader));
+        return MdcUtil.wrapMDC(responseEntityMono, Map.of("my-mdc-key", anHeader));
     }
 
     @GetMapping("test-client-programmatically-2")
@@ -54,7 +56,7 @@ public class MockApi {
                                         notifyShop(product, anHeader))
                                 .then(Mono.just(ResponseEntity.ok(new MessageResponse("Hello World!")))));
 
-        return MDCUtil.wrapMDC(responseEntityMono, "my-mdc-key", anHeader);
+        return MdcUtil.wrapMDC(responseEntityMono, "my-mdc-key", anHeader);
     }
 
     Mono<Void> addProduct(String productName, String awsTraceId) {
