@@ -1,10 +1,9 @@
-package com.vincenzoracca.webflux.mdc.api;
+package com.vincenzoracca.webflux.mdc.mongodb.api;
 
-import com.vincenzoracca.webflux.mdc.api.model.DocumentMetadata;
-import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
-import com.vincenzoracca.webflux.mdc.api.repo.DocumentMetadataRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.vincenzoracca.webflux.mdc.model.MessageResponse;
+import com.vincenzoracca.webflux.mdc.mongodb.model.DocumentMetadata;
+import com.vincenzoracca.webflux.mdc.mongodb.repo.DocumentMetadataRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -15,11 +14,15 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 @RestController
-@Slf4j
-@RequiredArgsConstructor
 public class MongoApi {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(MongoApi.class);
+
     private final DocumentMetadataRepository documentMetadataRepository;
+
+    public MongoApi(DocumentMetadataRepository documentMetadataRepository) {
+        this.documentMetadataRepository = documentMetadataRepository;
+    }
 
     @GetMapping("test-client-mongodb")
     public Mono<ResponseEntity<MessageResponse>> getMDCExampleProblem(@RequestHeader("X-Amzn-Trace-Id") String awsTraceId,
@@ -32,7 +35,6 @@ public class MongoApi {
     }
 
     public Mono<String> getImage(String fileKey) {
-        // Has MDC
         log.info("Inside getImage()");
 
         return getDocumentMetadata(fileKey)
@@ -40,14 +42,12 @@ public class MongoApi {
     }
 
     private Mono<DocumentMetadata> getDocumentMetadata(String fileKey) {
-        // Has MDC
         log.info("Inside getDocumentMetadata()");
         return documentMetadataRepository.findById(fileKey)
                 .doOnNext(documentMetadata -> log.info("Document found: {}", documentMetadata));
     }
 
     private Mono<String> downloadImage(DocumentMetadata documentMetadata) {
-        // No MDC
         log.info("Inside downloadImage()");
         return Mono.just("example");
     }

@@ -1,4 +1,4 @@
-package com.vincenzoracca.webflux.mdc.api.config;
+package com.vincenzoracca.webflux.mdc.mongodb.config;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.testcontainers.containers.MongoDBContainer;
@@ -7,7 +7,7 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration
 public class TestcontainersConfig {
 
-    static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+    static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:7.0.26"));
 
 
     static {

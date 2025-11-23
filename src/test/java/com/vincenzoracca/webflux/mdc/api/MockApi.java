@@ -1,6 +1,6 @@
 package com.vincenzoracca.webflux.mdc.api;
 
-import com.vincenzoracca.webflux.mdc.api.model.MessageResponse;
+import com.vincenzoracca.webflux.mdc.model.MessageResponse;
 import com.vincenzoracca.webflux.mdc.util.MdcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
