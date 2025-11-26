@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -38,13 +39,24 @@ class MongoApiMdcTestIT {
     private WebTestClient webTestClient;
 
     @Autowired
-    private DocumentMetadataRepository documentMetadataRepository;
+    private DatabaseClient databaseClient;
+
 
     private ListAppender<ILoggingEvent> listAppender;
     private Logger mongoApiLogger;
 
     @BeforeEach
     void setupAppender() {
+        databaseClient.sql("""
+                CREATE TABLE IF NOT EXISTS document_metadata (
+                    file_key VARCHAR(255) NOT NULL,
+                    PRIMARY KEY (file_key)
+                )
+                """)
+                .fetch()
+                .rowsUpdated()
+                .block();
+
         mongoApiLogger = (Logger) LoggerFactory.getLogger("com.vincenzoracca.webflux.mdc.mongodb.api.MongoApi");
         listAppender = new ListAppender<>();
         listAppender.start();
@@ -67,7 +79,11 @@ class MongoApiMdcTestIT {
         // prepariamo il repository mockato: ritorna un DocumentMetadata qualunque
         DocumentMetadata metadata = new DocumentMetadata(fileKey);
 
-        documentMetadataRepository.save(metadata).block();
+        databaseClient.sql("INSERT INTO document_metadata (file_key) VALUES (:fileKey)")
+                .bind("fileKey", metadata.fileKey())
+                .fetch()
+                .rowsUpdated()
+                .block();
 
         // quando x
         webTestClient.get()
