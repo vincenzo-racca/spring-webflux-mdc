@@ -62,8 +62,9 @@ public class MdcFilter implements WebFilter {
             List<String> defaults = mdcProperties.getDefaults();
 
             headersForMDC.forEach((headerForMDCKey, headerForMDCValue) -> {
-                if(requestHeaders.containsKey(headerForMDCKey)) {
-                    mapInContext.put(headerForMDCValue, requestHeaders.get(headerForMDCKey).get(0));
+                List<String> valuesForHeaderKey = requestHeaders.getValuesAsList(headerForMDCKey);
+                if(! valuesForHeaderKey.isEmpty()) {
+                    mapInContext.put(headerForMDCValue, valuesForHeaderKey.get(0));
                 }
                 else if(defaults.contains(headerForMDCKey)) {
                     mapInContext.put(headerForMDCValue, UUID.randomUUID().toString());
