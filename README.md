@@ -6,7 +6,7 @@ In a reactive application, execution can move across different threads and the t
 
 ## Features
 
-- Automatic Spring Boot 3 auto-configuration.
+- Automatic Spring Boot 3 and 4 auto-configuration.
 - WebFlux `WebFilter` with highest precedence.
 - MDC values populated from HTTP request headers.
 - Optional UUID fallback when a configured header is missing.
@@ -16,9 +16,16 @@ In a reactive application, execution can move across different threads and the t
 ## Requirements
 
 - Java 17+
-- Spring Boot 3.x
+- Spring Boot 3.x or 4.x
 - Spring WebFlux
 - SLF4J-compatible logging backend
+
+## Compatibility
+
+| spring-webflux-mdc version | Spring Boot compatibility |
+| --- | --- |
+| 1.1.0 | 3.x |
+| 1.2.0 | 3.x, 4.x |
 
 ## Installation
 
