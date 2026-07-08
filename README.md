@@ -35,7 +35,7 @@ In a reactive application, execution can move across different threads and the t
 <dependency>
     <groupId>com.vincenzoracca</groupId>
     <artifactId>spring-webflux-mdc</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
